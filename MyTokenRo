@@ -1,0 +1,42 @@
+// SPDX-License-Identifier: MIT
+
+pragma solidity = 0.8.22;
+
+// Updated class name to MyTokenRSH
+
+contract MyTokenRO {                        
+
+    // Updated public variable names
+
+    string public tokenName = "Rohit";        
+    string public tokenAbbr = "RO";
+    uint public totalSupply = 0;
+
+    // Updated mapping variable name
+
+    mapping(address => uint) public balances;
+
+    // Updated mint function
+
+    function mint(address _address, uint _value) public {
+        totalSupply += _value;
+        balances[_address] += _value;
+    }
+
+    // Updated burn function
+
+    function burn(address _address, uint _value) public {
+        if (balances[_address] >= _value) {
+            totalSupply -= _value;
+            balances[_address] -= _value;
+        }
+    }
+
+    // New function to transfer tokens
+
+    function transfer(address _from, address _to, uint _value) public {
+        require(balances[_from] >= _value, "Insufficient balance");
+        balances[_from] -= _value;
+        balances[_to] += _value;
+    }
+}
